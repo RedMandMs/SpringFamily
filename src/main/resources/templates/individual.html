@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Templates</title>
+	</head>
+	<body>
+	<div align="center">
+		<h1 align="middle" th:text="${individual.getLocalName()}"></h1>
+		<br/>
+		<br/>
+		<form th:action="@{/setDateTypeProperty/}" method="post">
+			<div>
+			<h2>Возраст:</h2>
+			<p th:text="${@dataTypePropertyService.getPropertyValue(individual.getLocalName(), &#34;Age&#34;)}"/>
+			<input type="text" name="valueProperty" th:value="${@dataTypePropertyService.getPropertyValue(individual.getLocalName(), &#34;Age&#34;)}"/>
+			<input type="text" name="nameProperty" value="Age" hidden="hidden"/>
+			<input type="text" name="nameIndividual" th:value="${individual.getLocalName()}" hidden="hidden"/>
+			<input type="submit" value="Изменить"/>
+			</div>
+		</form>
+		<form th:action="@{/setDateTypeProperty/}" method="post">
+			<div>
+			<h2>Рост:</h2>
+			<p th:text="${@dataTypePropertyService.getPropertyValue(individual.getLocalName(), &#34;Height&#34;)}"/>
+			<input type="text" name="valueProperty" th:value="${@dataTypePropertyService.getPropertyValue(individual.getLocalName(), &#34;Height&#34;)}"/>
+			<input type="text" name="nameProperty" value="Height" hidden="hidden"/>
+			<input type="text" name="nameIndividual" th:value="${individual.getLocalName()}" hidden="hidden"/>
+			<input type="submit" value="Изменить"/>
+			</div>
+		</form>
+		<form th:action="@{/setDateTypeProperty/}" method="post">
+			<div>
+			<h2>Вес:</h2>
+			<p th:text="${@dataTypePropertyService.getPropertyValue(individual.getLocalName(), &#34;Weight&#34;)}"/>
+			<input type="text" name="valueProperty" th:value="${@dataTypePropertyService.getPropertyValue(individual.getLocalName(), &#34;Weight&#34;)}"/>
+			<input type="text" name="nameProperty" value="Weight" hidden="hidden"/>
+			<input type="text" name="nameIndividual" th:value="${individual.getLocalName()}" hidden="hidden"/>
+			<input type="submit" value="Изменить"/>
+			</div>
+		</form>
+		<form th:action="@{/setDateTypeProperty/}" method="post">
+			<div>
+			<h2>Пол:</h2>
+			<th:block th:with="sex=${@dataTypePropertyService.getPropertyValue(individual.getLocalName(), &#34;Sex&#34;)}">
+				<th:block th:if="${sex != null}">	
+					<p th:if="${sex.equals('male')}" th:text="Мужской"/>
+					<p th:if="${sex.equals('female')}" th:text="Женский"/>
+				</th:block>
+				<select name="valueProperty">
+					<option th:value="male" th:text="Мужской"/>
+					<option th:value="female" th:text="Женский"/>
+				</select>
+				<input type="text" name="nameProperty" value="Sex" hidden="hidden"/>
+				<input type="text" name="nameIndividual" th:value="${individual.getLocalName()}" hidden="hidden"/>
+				<input type="submit" value="Изменить"/>
+			</th:block>
+			</div>
+		</form>
+		<br/>
+		<br/>
+		<form th:action="@{/setObjectPropertyValue/}" method="post">
+			<div>
+			<h2>Отец:</h2>
+			<th:block th:with="father=${@objectPropertyService.getPropertyValue(individual.getLocalName(), &#34;Father&#34;)}">
+			<p th:if="${!father.isEmpty()}" th:text="${father.get(0).getLocalName()}"/>
+			<p th:if="${father.isEmpty()}" />
+			<select name="valueProperty">
+				<th:block th:each="man : ${@individualService.getAllMen()}">
+					<option th:value="${man.getLocalName()}" th:text="${man.getLocalName()}"/>
+				</th:block>
+			</select>
+			<input type="text" name="nameProperty" value="Father" hidden="hidden"/>
+			<input type="text" name="nameIndividual" th:value="${individual.getLocalName()}" hidden="hidden"/>
+			<input type="submit" value="Изменить"/>
+			</th:block>
+			</div>
+		</form>
+		<form th:action="@{/setObjectPropertyValue/}" method="post">
+			<div>
+			<h2>Мать:</h2>
+			<th:block th:with="mother=${@objectPropertyService.getPropertyValue(individual.getLocalName(), &#34;Mother&#34;)}">
+			<p th:if="${!mother.isEmpty()}" th:text="${mother.get(0).getLocalName()}"/>
+			<p th:if="${mother.isEmpty()}" />
+			<select name="valueProperty">
+				<th:block th:each="woman : ${@individualService.getAllWomen()}">
+					<option th:value="${woman.getLocalName()}" th:text="${woman.getLocalName()}"/>
+				</th:block>
+			</select>
+			<input type="text" name="nameProperty" value="Mother" hidden="hidden"/>
+			<input type="text" name="nameIndividual" th:value="${individual.getLocalName()}" hidden="hidden"/>
+			<input type="submit" value="Изменить"/>
+			</th:block>
+			</div>
+		</form>
+		<form th:action="@{/setObjectPropertyValue/}" method="post">
+			<div>
+			<h2>Брат:</h2>
+			<th:block th:with="brother=${@objectPropertyService.getPropertyValue(individual.getLocalName(), &#34;Brother&#34;)}">
+			<p th:if="${!brother.isEmpty()}" th:text="${brother.get(0).getLocalName()}"/>
+			<p th:if="${brother.isEmpty()}" />
+			<select name="valueProperty">
+				<th:block th:each="man : ${@individualService.getAllMen()}">
+					<option th:value="${man.getLocalName()}" th:text="${man.getLocalName()}"/>
+				</th:block>
+			</select>
+			<input type="text" name="nameProperty" value="Brother" hidden="hidden"/>
+			<input type="text" name="nameIndividual" th:value="${individual.getLocalName()}" hidden="hidden"/>
+			<input type="submit" value="Изменить"/>
+			</th:block>
+			</div>
+		</form>
+		<form th:action="@{/setObjectPropertyValue/}" method="post">
+			<div>
+			<h2>Сестра:</h2>
+			<th:block th:with="sister=${@objectPropertyService.getPropertyValue(individual.getLocalName(), &#34;Sister&#34;)}">
+			<p th:if="${!sister.isEmpty()}" th:text="${sister.get(0).getLocalName()}"/>
+			<p th:if="${sister.isEmpty()}" />
+			<select name="valueProperty">
+				<th:block th:each="woman : ${@individualService.getAllWomen()}">
+					<option th:value="${woman.getLocalName()}" th:text="${woman.getLocalName()}"/>
+				</th:block>
+			</select>
+			<input type="text" name="nameProperty" value="Sister" hidden="hidden"/>
+			<input type="text" name="nameIndividual" th:value="${individual.getLocalName()}" hidden="hidden"/>
+			<input type="submit" value="Изменить"/>
+			</th:block>
+			</div>
+		</form>
+		<form th:action="@{/setObjectPropertyValue/}" method="post">
+			<div>
+			<h2>Партнёр:</h2>
+			<th:block th:with="partner=${@objectPropertyService.getPropertyValue(individual.getLocalName(), &#34;Partner&#34;)}">
+			<p th:if="${!partner.isEmpty()}" th:text="${partner.get(0).getLocalName()}"/>
+			<p th:if="${partner.isEmpty()}" />
+			<th:block th:with="sex=${@dataTypePropertyService.getPropertyValue(individual.getLocalName(), &#34;Sex&#34;)}">
+				<th:block th:if="${sex != null}">
+					<select name="valueProperty" th:if="${sex.equals('female')}">
+						<th:block th:each="man : ${@individualService.getAllMen()}">
+							<option th:value="${man.getLocalName()}" th:text="${man.getLocalName()}"/>
+						</th:block>
+					</select>
+					<select name="valueProperty" th:if="${sex.equals('male')}">
+						<th:block th:each="woman : ${@individualService.getAllWomen()}">
+							<option th:value="${woman.getLocalName()}" th:text="${woman.getLocalName()}"/>
+						</th:block>
+					</select>
+				</th:block>
+			</th:block>
+			<input type="text" name="nameProperty" value="Partner" hidden="hidden"/>
+			<input type="text" name="nameIndividual" th:value="${individual.getLocalName()}" hidden="hidden"/>
+			<input type="submit" value="Изменить"/>
+			</th:block>
+			</div>
+		</form>
+	</div>
+	</body>
+</html>
